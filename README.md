@@ -18,25 +18,25 @@ El sistema expone endpoints RESTful documentados mediante **Swagger UI** y prote
 
 ---
 
-## 🗄️ Base de Datos (SQL Server)
+## Base de Datos (SQL Server)
 
-El modelo de dominio inicial está compuesto por las siguientes tablas:
+El modelo de dominio está compuesto por las siguientes tablas:
 *   `Paciente`
 *   `Doctor`
 *   `Especialidad`
 *   `Atencion`
 
 ### Paso 1: Inicialización
-Ejecuta el script unificado provisto en el proyecto para configurar toda tu base de datos (tablas, datos semilla y todos los stored procedures) de una sola vez:
+Ejecuta el script unificado  para configurar toda tu base de datos (tablas, datos semilla y todos los stored procedures) de una sola vez:
 
 *   **`database_setup.sql`**: Ejecuta este script completo en tu servidor SQL Server. Se encargará de crear el esquema, rellenar los datos de prueba y compilar todos los Stored Procedures.
 
 ---
 
-## ⚙️ Configuración y Ejecución
+## Configuración y Ejecución
 
 ### Paso 2: Configuración del proyecto
-Edita el archivo [appsettings.json](file:///c:/Users/Snow%20Mun/Desktop/test/MedicalApi/appsettings.json) para configurar tu cadena de conexión y la API Key de seguridad:
+Edita el archivo [appsettings.json] para configurar tu cadena de conexión y la API Key de seguridad:
 
 ```json
 {

@@ -21,6 +21,7 @@
 *.7z
 
 ## Ignore local config / secrets files
+appsettings.json
 appsettings.Development.json
 secrets.json
 
@@ -34,3 +35,7 @@ Desktop.ini
 packages/
 node_modules/
 .antigravitycli/
+
+appsettings.json
+appsettings.Development.json
+secrets.json
