@@ -1,0 +1,36 @@
+## Ignore Visual Studio & VS Code files
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+## Ignore Build folders (bin and obj)
+[Bb]in/
+[Oo]bj/
+
+## Ignore compiled files
+*.dll
+*.exe
+*.pdb
+*.msi
+*.zip
+*.rar
+*.7z
+
+## Ignore local config / secrets files
+appsettings.Development.json
+secrets.json
+
+## Ignore OS-specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+## Ignore local package cache
+packages/
+node_modules/
+.antigravitycli/
