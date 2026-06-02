@@ -70,7 +70,7 @@ Una vez en ejecución, la API estará disponible en la URL indicada por la conso
 Todos los endpoints (con excepción de Swagger y OpenAPI) requieren autenticación por cabecera. Debes incluir el header `X-API-KEY` en cada solicitud HTTP:
 
 *   **Header Name**: `X-API-KEY`
-*   **Header Value**: El valor configurado en tu `appsettings.json`.
+*   **Header Value**: El valor configurado en tu `appsettings.Development.json`.
 
 ---
 
