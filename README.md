@@ -29,7 +29,7 @@ El modelo de dominio está compuesto por las siguientes tablas:
 ### Paso 1: Inicialización
 Ejecuta el script unificado  para configurar toda tu base de datos (tablas, datos semilla y todos los stored procedures) de una sola vez:
 
-*   **`database_setup.sql`**: Ejecuta este script completo en tu servidor SQL Server. Se encargará de crear el esquema, rellenar los datos de prueba y compilar todos los Stored Procedures.
+*   **`database_setup.sql`**: Ejecuta este script entregado como parte del proyecto en tu servidor SQL Server.
 
 ---
 
@@ -43,7 +43,7 @@ Edita el archivo [appsettings.json] para configurar tu cadena de conexión y la 
   "ConnectionStrings": {
     "DefaultConnection": "TuCadenaDeConexionSQLServer"
   },
-  "ApiKey": "123456789"
+  "ApiKey": "[ENCRYPTION_KEY]"
 }
 ```
 
@@ -65,16 +65,16 @@ Una vez en ejecución, la API estará disponible en la URL indicada por la conso
 
 ---
 
-## 🔐 Seguridad (Autenticación)
+## Seguridad (Autenticación)
 
 Todos los endpoints (con excepción de Swagger y OpenAPI) requieren autenticación por cabecera. Debes incluir el header `X-API-KEY` en cada solicitud HTTP:
 
 *   **Header Name**: `X-API-KEY`
-*   **Header Value**: El valor configurado en tu `appsettings.json` (por defecto `123456789`).
+*   **Header Value**: El valor configurado en tu `appsettings.json`.
 
 ---
 
-## 📖 Documentación de la API (Swagger UI)
+## Documentación de la API (Swagger UI)
 
 Una vez que el proyecto esté corriendo en modo de desarrollo (`Development`), puedes ingresar a la interfaz gráfica de Swagger para probar interactivamente todos los endpoints:
 
@@ -87,7 +87,7 @@ Para autenticarte dentro de la interfaz de Swagger UI:
 
 ---
 
-## 🧪 Pruebas y Validación
+## Pruebas y Validación
 
 La API incluye las siguientes funcionalidades clave validadas en su lógica:
 1.  **Evitar solapamientos de horario**: Al registrar una atención médica, el servicio valida que el doctor no tenga otra atención programada dentro del rango de fecha y hora provistos.
