@@ -60,6 +60,13 @@ public class AtencionService : IAtencionService
         using var connection = new SqlConnection(
             _configuration.GetConnectionString("DefaultConnection"));
 
+        // Validar que las fechas sean coherentes
+        if (atencion.FechaHoraInicio >= atencion.FechaHoraFin)
+        {
+            throw new InvalidOperationException(
+                "FechaHoraInicio debe ser anterior a FechaHoraFin.");
+        }
+
         // Validar solape en una atencion para el mismo Atencion 
         var solapamientoExiste =
             await connection.ExecuteScalarAsync<int?>(
@@ -72,7 +79,8 @@ public class AtencionService : IAtencionService
                 },
                 commandType: CommandType.StoredProcedure);
 
-        if (solapamientoExiste.HasValue)
+        // el SP devuelve 0 o 1 (o un número de solapamientos), validar > 0
+        if (solapamientoExiste.HasValue && solapamientoExiste.Value > 0)
         {
             throw new InvalidOperationException(
                 "ya existe una atencion con esta fecha y hora");
@@ -80,17 +88,31 @@ public class AtencionService : IAtencionService
 
 
         // Crear doctor 
-         await connection.ExecuteScalarAsync<int>(
-            "sp_Atencion_Insert",
-            new
+        try
+        {
+            await connection.ExecuteScalarAsync<int>(
+                "sp_Atencion_Insert",
+                new
+                {
+                    atencion.PacienteId,
+                    atencion.DoctorId,
+                    atencion.FechaHoraInicio,
+                    atencion.FechaHoraFin,
+                    atencion.Diagnostico
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+        catch (SqlException ex)
+        {
+            // Convertir violaciones de constraint de fechas en un error de validación legible
+            if (ex.Message != null && ex.Message.Contains("CK_Atencion_Fechas"))
             {
-                atencion.PacienteId,
-                atencion.DoctorId,
-                atencion.FechaHoraInicio,
-                atencion.FechaHoraFin,
-                atencion.Diagnostico
-            },
-            commandType: CommandType.StoredProcedure);
+                throw new InvalidOperationException(
+                    "Las fechas de la atención son inválidas: FechaHoraInicio debe ser anterior a FechaHoraFin.");
+            }
+
+            throw;
+        }
     }
 
     //Actualiza una atencion por su id

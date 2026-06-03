@@ -65,14 +65,28 @@ public class DoctorService : IDoctorService
 
 
     // Crear doctor 
-    await connection.ExecuteScalarAsync<int>(
-        "sp_Doctor_Insert",
-        new
+    try
+    {
+        await connection.ExecuteScalarAsync<int>(
+            "sp_Doctor_Insert",
+            new
+            {
+                doctor.Nombre,
+                doctor.EspecialidadId
+            },
+            commandType: CommandType.StoredProcedure);
+    }
+    catch (SqlException ex)
+    {
+        // Construir mensaje detallado para ayudar al diagnóstico (no exponer demasiada info en producción)
+        var msg = $"Error SQL al crear doctor: Number={ex.Number}; Message={ex.Message}";
+        foreach (SqlError err in ex.Errors)
         {
-            doctor.Nombre,
-            doctor.EspecialidadId
-        },
-        commandType: CommandType.StoredProcedure);
+            msg += $" | Proc={err.Procedure}; Line={err.LineNumber}; ErrMessage={err.Message}";
+        }
+
+        throw new InvalidOperationException(msg);
+    }
     }
 
 

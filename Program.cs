@@ -39,6 +39,7 @@ builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<IEspecialidadService, EspecialidadService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IAtencionService, AtencionService>();
+builder.Services.AddScoped<IEstadisticaService, EstadisticaService>();
 
 var app = builder.Build();
 app.UseCors("AllowAll");
